@@ -8,8 +8,8 @@ import 'package:url_launcher/url_launcher.dart';
 class Guia2Page extends StatelessWidget {
   // static final String path = "lib/src/pages/profile/profile3.dart";
 
-  final image =
-      'https://besthqwallpapers.com/Uploads/14-4-2018/48290/thumb2-lionel-messi-argentina-portrait-joy-smile.jpg';
+  // final image =
+  //     'https://besthqwallpapers.com/Uploads/14-4-2018/48290/thumb2-lionel-messi-argentina-portrait-joy-smile.jpg';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,10 +20,12 @@ class Guia2Page extends StatelessWidget {
             SizedBox(
                 height: 250,
                 width: double.infinity,
-                child: Image.network(
-                  image,
-                  fit: BoxFit.cover,
-                )),
+                child: Image.asset('assets/joel.jpg',fit: BoxFit.cover)
+                // child: Image.network(
+                //   image,
+                //   fit: BoxFit.cover,
+                // )
+                ),
             Container(
               margin: EdgeInsets.fromLTRB(16.0, 200.0, 16.0, 16.0),
               child: Column(
@@ -108,7 +110,7 @@ class Guia2Page extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
                             image: DecorationImage(
-                                image: NetworkImage(image), fit: BoxFit.cover)),
+                                image: AssetImage('assets/joel.jpg'))),
                         margin: EdgeInsets.only(left: 16.0),
                       ),
                     ],

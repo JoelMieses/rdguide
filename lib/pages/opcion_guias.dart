@@ -12,7 +12,7 @@ class _OpcionGuiasPage extends State<OpcionGuiasPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Guias'),
+        title: Text('Guías'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: (){
@@ -25,7 +25,7 @@ class _OpcionGuiasPage extends State<OpcionGuiasPage> {
        Card(
             child: ListTile(
               leading: Icon(Icons.person, color: Colors.blue,),
-              title: Text('Argeni Estevez'),
+              title: Text('Argeni Estévez'),
               onTap: (){
                 Navigator.pushNamed(context, '/guia1');
               },
@@ -55,28 +55,28 @@ class _OpcionGuiasPage extends State<OpcionGuiasPage> {
               //trailing: Icon(Icons.more_vert),                    
             ), 
       ),
-      Card(
-            child: ListTile(
-              leading: Icon(Icons.person, color: Colors.red,),
-              title: Text('Luis Jimenes'),
-              onTap: (){
-                Navigator.pushNamed(context, '/guia3');
-              },
-              //subtitle: Text('Breve descripción'),
-              //trailing: Icon(Icons.more_vert),                    
-            ), 
-      ),
-      Card(
-            child: ListTile(
-              leading: Icon(Icons.person, color: Colors.orange,),
-              title: Text('Samuel Canela'),
-              onTap: (){
-                Navigator.pushNamed(context, '/guia3');
-              },
-              //subtitle: Text('Breve descripción'),
-              //trailing: Icon(Icons.more_vert),                    
-            ), 
-      ),
+      // Card(
+      //       child: ListTile(
+      //         leading: Icon(Icons.person, color: Colors.red,),
+      //         title: Text('Luis Jimenes'),
+      //         onTap: (){
+      //           Navigator.pushNamed(context, '/guia3');
+      //         },
+      //         //subtitle: Text('Breve descripción'),
+      //         //trailing: Icon(Icons.more_vert),                    
+      //       ), 
+      // ),
+      // Card(
+      //       child: ListTile(
+      //         leading: Icon(Icons.person, color: Colors.orange,),
+      //         title: Text('Samuel Canela'),
+      //         onTap: (){
+      //           Navigator.pushNamed(context, '/guia3');
+      //         },
+      //         //subtitle: Text('Breve descripción'),
+      //         //trailing: Icon(Icons.more_vert),                    
+      //       ), 
+      // ),
 
        
    

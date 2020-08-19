@@ -31,7 +31,7 @@ class _SeguridadPage extends State<SeguridadPage> {
               _cambiarPass(),
               SizedBox(),
               //Divider(),
-              __switchAutentificacion(),
+              // __switchAutentificacion(),
             ],
           ),
         ),
