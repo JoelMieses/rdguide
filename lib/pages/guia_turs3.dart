@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -7,8 +6,8 @@ import 'package:url_launcher/url_launcher.dart';
 class Guia3Page extends StatelessWidget {
   // static final String path = "lib/src/pages/profile/profile3.dart";
 
-  final image =
-      'https://www.mundodeportivo.com/r/GODO/MD/p7/Futbol/Imagenes/2020/04/06/Recortada/img_agomezo_20200326-110529_imagenes_md_otras_fuentes_gettyimages-1205035438-kT0F-U48336284567QyD-980x554@MundoDeportivo-Web.jpg';
+  // final image =
+  //     'https://www.mundodeportivo.com/r/GODO/MD/p7/Futbol/Imagenes/2020/04/06/Recortada/img_agomezo_20200326-110529_imagenes_md_otras_fuentes_gettyimages-1205035438-kT0F-U48336284567QyD-980x554@MundoDeportivo-Web.jpg';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,10 +18,12 @@ class Guia3Page extends StatelessWidget {
             SizedBox(
                 height: 250,
                 width: double.infinity,
-                child: Image.network(
-                  image,
-                  fit: BoxFit.cover,
-                )),
+                child: Image.asset('assets/ricardo.jpg', fit: BoxFit.cover)
+                // child: Image.network(
+                //   image,
+                //   fit: BoxFit.cover,
+                // )
+                ),
             Container(
               margin: EdgeInsets.fromLTRB(16.0, 200.0, 16.0, 16.0),
               child: Column(
@@ -107,7 +108,7 @@ class Guia3Page extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
                             image: DecorationImage(
-                                image: NetworkImage(image), fit: BoxFit.cover)),
+                                image: AssetImage('assets/ricardo.jpg'))),
                         margin: EdgeInsets.only(left: 16.0),
                       ),
                     ],
@@ -173,8 +174,7 @@ class Guia3Page extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
-                          subtitle: Text(
-                              '''
+                          subtitle: Text('''
 Recepción de los visitantes nacionales y extranjeros. 
 
 Acompañamiento de turistas. 
@@ -355,7 +355,8 @@ Ejecución puntual del programa de actividades establecido por la agencia de via
       ),
     );
   }
-   _lansarWhatsapp() async {
+
+  _lansarWhatsapp() async {
     const url = 'https://wa.me/18298662767';
     if (await canLaunch(url)) {
       await launch(url);

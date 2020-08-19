@@ -6,8 +6,8 @@ import 'package:url_launcher/url_launcher.dart';
 class Guia1Page extends StatelessWidget {
   // static final String path = "lib/src/pages/profile/profile3.dart";
 
-  final image =
-      'https://s.yimg.com/it/api/res/1.2/yWeM3re8XnoBfOJiMg3LDw--~A/YXBwaWQ9eW5ld3M7dz0zMDA7aD0yMDA7cT0xMDA-/https://s.yimg.com/xe/i/us/sp/v/nba_cutout/players_l/10112019/3704.png';
+  // final image =
+  //     'https://s.yimg.com/it/api/res/1.2/yWeM3re8XnoBfOJiMg3LDw--~A/YXBwaWQ9eW5ld3M7dz0zMDA7aD0yMDA7cT0xMDA-/https://s.yimg.com/xe/i/us/sp/v/nba_cutout/players_l/10112019/3704.png';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,10 +18,12 @@ class Guia1Page extends StatelessWidget {
             SizedBox(
                 height: 250,
                 width: double.infinity,
-                child: Image.network(
-                  image,
-                  fit: BoxFit.cover,
-                )),
+                child: Image.asset('assets/argeny.jpg',fit: BoxFit.cover),
+                // child: Image.network(
+                //   image,
+                //   fit: BoxFit.cover,
+                // )
+                ),
             Container(
               margin: EdgeInsets.fromLTRB(16.0, 200.0, 16.0, 16.0),
               child: Column(
@@ -106,7 +108,9 @@ class Guia1Page extends StatelessWidget {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
                             image: DecorationImage(
-                                image: NetworkImage(image), fit: BoxFit.cover)),
+                                image: AssetImage('assets/argeny.jpg'))),
+
+                                //  NetworkImage(image), fit: BoxFit.cover
                         margin: EdgeInsets.only(left: 16.0),
                       ),
                     ],
