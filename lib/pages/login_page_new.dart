@@ -265,7 +265,8 @@ class _LoginPageState extends State<LoginPage> {
         stream: bloc.errorStream,
         builder: (context, AsyncSnapshot<String> snapshot) {
           return Center(
-            child: (snapshot.hasData && snapshot.data.isNotEmpty)? AlertDialog(
+            child: (snapshot.hasData && snapshot.data.isNotEmpty)?
+            AlertDialog(
 
               title: Row(
                 children: <Widget>[
@@ -277,7 +278,7 @@ class _LoginPageState extends State<LoginPage> {
               actions: <Widget>[
                 FlatButton(
                   child: Text('Aceptar'),
-                  onPressed: () {},
+                  onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
                 ),
               ],
             )

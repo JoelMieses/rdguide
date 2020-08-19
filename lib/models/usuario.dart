@@ -13,7 +13,7 @@ class Usuario {
     this.token,
   });
 
-  String id;
+  int id;
   String nombre;
   String apellido;
   String sexo;
@@ -32,6 +32,9 @@ class Usuario {
     clave: json["clave"],
     token: json["token"],
   );
+  factory Usuario.toPost(){
+
+  }
 
   Map<String, dynamic> toJson() => {
     "idcliente": id,

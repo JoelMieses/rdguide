@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rdguide/bloc/bloc_provider.dart';
+import 'package:rdguide/bloc/registro_bloc.dart';
 import 'package:rdguide/models/usuario.dart';
+import 'package:intl/intl.dart';
 
 
 class RegistroUsuarioPage extends StatefulWidget {
@@ -8,62 +11,87 @@ class RegistroUsuarioPage extends StatefulWidget {
 }
 
 Usuario usuario = new Usuario();
-TextEditingController _fechaController,_nombreController,_apellidoController,_correoController,
-    _claveController,_repeatClaveController = new TextEditingController();
+String claveError;
+
+
+final _formKey = GlobalKey<FormState>();
 
 class _RegistroUsuarioPageState extends State<RegistroUsuarioPage> {
 
   String _fecha = '';
 
-  TextEditingController _inputFieldDateController = new TextEditingController();
+  final _nombreController = new TextEditingController();
+  final _apellidoController = new TextEditingController();
+  final _correoController = new TextEditingController();
+  final _claveController = new TextEditingController();
+  final _repeatClaveController = new TextEditingController();
+  final _inputFieldDateController = new TextEditingController();
+
+  final bloc = RegistroBloc();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Registrar Usuario'),
-        backgroundColor: Colors.green,
+    return BlocProvider(
+      bloc: bloc,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Registrar Usuario'),
+          backgroundColor: Colors.green,
 
-      ),
-      body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0,),
-        //aqui se estan creando todos los metodos que se usaran mas adelante
-        children: <Widget>[
-          _nombreInput(),
-          Divider(),
-          _apellidoInput(),
-          //Divider(),
-          //_sexo(),
-          MyStatefulWidget(),
-          Divider(),
-          _creaFecha(context),
-          Divider(),
-          _email(),
-          Divider(),
-          _crearPass(),
-          Divider(),
-          _confirmarPass(),
-          Divider(),
-          _registrar(),
-        ],
+        ),
+        body: _form()
       ),
     );
   }
+
+Widget _form(){
+    return Form(
+      key: _formKey,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _textInput(controller: _nombreController,hint: "Nombre",icon: Icons.account_circle),
+            Divider(),
+            _textInput(controller: _apellidoController,hint: "Apellido",icon: Icons.account_circle),
+            //Divider(),
+            //_sexo(),
+            MyStatefulWidget(),
+            Divider(),
+            _creaFecha(context),
+            Divider(),
+            _email(),
+            Divider(),
+            _claveInput(controller: _claveController,hint: "Contraseña"),
+            Divider(),
+            _claveInput(controller: _repeatClaveController,hint: "Confirmar Contraseña"),
+            Divider(),
+            _registrar(),
+          ],
+        ),
+      ),
+    );
+}
 
 
 
   //este widget es el correspondiente al nombre
-  Widget _nombreInput() {
-    return TextField(
+  Widget _textInput({controller: TextEditingController, icon: IconData,hint:String}) {
+    return TextFormField(
+      controller: controller,
+      validator: (value){
+        if(value.isEmpty){
+          return "Este campo no puede estar vacio";
+        }return null;
+      },
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.0)
         ),
-        hintText: 'Nombres',
-        //labelText: 'Nombre',
+        hintText: hint,
         prefixIcon: Icon(
-          Icons.account_circle,
+          icon,
           color: Colors.grey,
         ),
       ),
@@ -71,62 +99,35 @@ class _RegistroUsuarioPageState extends State<RegistroUsuarioPage> {
 
   }
 
-  //este widget es el correspondiente al apellido
-  Widget _apellidoInput() {
-
-    return TextField(
+  //este widget es el correspondiente a las claves
+  Widget _claveInput({controller: TextEditingController, hint:String}) {
+    return TextFormField(
+      obscureText: true,
+      controller: controller,
+      onChanged: (value){
+        setState(() {
+          usuario.clave = value;
+        });
+      },
+      validator: (value){
+        if(value.isEmpty){
+          return "Este campo no puede estar vacio";
+        }return null;
+      },
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.0)
         ),
-        hintText: 'Apellidos',
-        //labelText: 'Apellido',
+        hintText: hint,
         prefixIcon: Icon(
-          Icons.account_circle,
+          Icons.lock,
           color: Colors.grey,
         ),
       ),
     );
+
   }
-// bool valor0 = false;
-// bool valor1 = false;
-
-//   Widget _sexo(){
-//     return Row(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       children: <Widget>[
-//         Text("Sexo: ",style: TextStyle(fontSize: 18,color: Colors.black54, fontWeight: FontWeight.bold),),
-
-
-//         Text("Masculino",style: TextStyle(fontSize: 18,color: Colors.black54),),
-//         Checkbox(
-
-//                 value: valor0,
-//                 onChanged: (bool value) {
-//                 setState(() {
-//                 valor0 = value;
-//                 });
-//     }
-//     ),
-//   Text("Femenino",style:TextStyle(fontSize: 18,color: Colors.black54)),
-//     Checkbox(
-
-//                     value: valor1,
-//                     onChanged: (bool value) {
-//                       setState(() {
-//                         valor1 = value;
-//                       });
-//     }
-//     )
-
-
-
-
-//     ],
-//     );
-//   }
-
 
 
   //este widget es el correspondiente al campo fecha de nacimiento
@@ -164,15 +165,15 @@ class _RegistroUsuarioPageState extends State<RegistroUsuarioPage> {
     DateTime picked =  await showDatePicker(
         context: context,
         initialDate: new DateTime.now(),
-        firstDate: new DateTime(2018),
-        lastDate: new DateTime(2025),
+        firstDate: new DateTime(1940),
+        lastDate: new DateTime.now(),
         locale: Locale('es', 'ES')
     );
 
     if (picked !=null){
       setState(() {
 
-        _fecha = picked.toString();
+        _fecha = "${DateFormat('yyyy-MM-dd').format(picked)}";
         _inputFieldDateController.text = _fecha;
       });
     }
@@ -182,64 +183,71 @@ class _RegistroUsuarioPageState extends State<RegistroUsuarioPage> {
   //este widget es el correspondiente al Correo electronico
   _email() {
 
-    return TextField(
+    return TextFormField(
+      controller: _correoController,
+      keyboardType: TextInputType.emailAddress,
+      validator: (value){
+        if(value.isEmpty){
+          return "Este campo no puede estar vacio";
+        }return null;
+      },
+      textCapitalization: TextCapitalization.none,
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.0)
         ),
-        hintText: 'xxxxx@ejemplo.com',
-        // labelText: 'Email',
+        hintText: "xxxxxx@ejemplo.com",
         prefixIcon: Icon(
           Icons.email,
           color: Colors.grey,
         ),
-
       ),
     );
 
   }
 
   //este widget es el correspondiente al campo crear contraseña
-  Widget _crearPass( ) {
-
-    return TextField(
-      obscureText: true,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0)
-        ),
-        hintText: 'Contraseña',
-        //labelText: 'Contraseña',
-        prefixIcon: Icon(
-          Icons.lock,
-          color: Colors.grey,
-        ),
-
-      ),
-    );
-  }
+//  Widget _crearPass( ) {
+//
+//    return TextField(
+//      obscureText: true,
+//      decoration: InputDecoration(
+//        border: OutlineInputBorder(
+//            borderRadius: BorderRadius.circular(20.0)
+//        ),
+//        hintText: 'Contraseña',
+//        //labelText: 'Contraseña',
+//        prefixIcon: Icon(
+//          Icons.lock,
+//          color: Colors.grey,
+//        ),
+//
+//      ),
+//    );
+//  }
 
   //este widget es el correspondiente al campo confirmar contraseña
-  Widget _confirmarPass( ) {
-
-    return TextField(
-      obscureText: true,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0)
-        ),
-        hintText: 'Confirmar Contraseña',
-        //labelText: 'Confirmar Contraseña',
-        prefixIcon: Icon(
-          Icons.lock,
-          color: Colors.grey,
-        ),
-
-      ),
-    );
-  }
+//  Widget _confirmarPass( ) {
+//
+//    return TextField(
+//      obscureText: true,
+//      decoration: InputDecoration(
+//        border: OutlineInputBorder(
+//            borderRadius: BorderRadius.circular(20.0)
+//        ),
+//        hintText: 'Confirmar Contraseña',
+//        //labelText: 'Confirmar Contraseña',
+//        prefixIcon: Icon(
+//          Icons.lock,
+//          color: Colors.grey,
+//        ),
+//
+//      ),
+//    );
+//  }
 
   //este widget es el correspondiente al campo boton registro de usuario
+
   Widget _registrar(){
 
     return RaisedButton(
@@ -255,12 +263,33 @@ class _RegistroUsuarioPageState extends State<RegistroUsuarioPage> {
       textColor: Colors.white,
       onPressed: (){
 
+        if(_formKey.currentState.validate()){
+
+         registrar();
+
+          if(validatePassword()){
+
+          }else{
+             SnackBar(content: Text("Contraseña no coinciden"),);
+          }
+
+        }
       },
     );
   }
+  void registrar(){
+    usuario = Usuario(id:0,nombre: _nombreController?.text?.trim(),apellido: _apellidoController?.text?.trim(),
+        email: _correoController?.text?.toLowerCase()?.trim(), clave: _claveController?.text?.trim()
+        ,sexo: _character.toString(),fechanac: _fecha);
 
-
+    print(usuario);
+    bloc.registro(usuario: usuario, context: context);
+  }
+  bool validatePassword(){
+    return (_claveController?.text == _repeatClaveController.text);
+  }
 }
+
 
 class RadioButton extends StatelessWidget {
   static const String _title = 'Flutter Code Sample';
@@ -279,8 +308,8 @@ class RadioButton extends StatelessWidget {
     );
   }
 }
+String _character = "M";
 
-enum SingingCharacter { masculino, femenino }
 
 class MyStatefulWidget extends StatefulWidget {
   MyStatefulWidget({Key key}) : super(key: key);
@@ -290,7 +319,7 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  SingingCharacter _character = SingingCharacter.masculino;
+
 
   Widget build(BuildContext context) {
     return Column(
@@ -300,9 +329,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         ListTile(
           title: const Text('Masculino',),
           leading: Radio(
-            value: SingingCharacter.masculino,
+            value: "M",
             groupValue: _character,
-            onChanged: (SingingCharacter value) {
+            onChanged: (String value) {
               setState(() {
                 _character = value;
               });
@@ -312,9 +341,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         ListTile(
           title: const Text('Femenino'),
           leading: Radio(
-            value: SingingCharacter.femenino,
+            value: "F",
             groupValue: _character,
-            onChanged: (SingingCharacter value) {
+            onChanged: (String value) {
               setState(() {
                 _character = value;
               });
