@@ -24,19 +24,19 @@ class Reserva {
   //String token;
 
   factory Reserva.fromJson(Map<String, dynamic> json) => Reserva(
-    idreserva: json["idreserva"],
-    idcliente: json["idcliente"],
-    idarea: json["idarea"],
-    cantidad: json["cantidad"],
-    personas: json["personas"],
+    idreserva: int.parse(json["idreserva"]),
+    idcliente:int.parse( json["idcliente"]),
+    idarea: int.parse(json["idarea"]),
+    cantidad: int.parse(json["cantidad"]),
+    personas:int.parse( json["personas"]),
     desde: json["desde"],
     hasta: json["hasta"],
     comentario: json["comentario"],
     //token: json["token"],
   );
-  factory Reserva.toPost(){
+  /*factory Reserva.toPost(){
 
-  }
+  }*/
 
   Map<String, dynamic> toJson() => {
     "idreserva": idreserva,

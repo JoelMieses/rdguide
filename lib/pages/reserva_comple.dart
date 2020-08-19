@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'main_pages/inicio_page.dart';
+
 class ReservaHotelPage extends StatelessWidget {
 
   //aqui se cargan los estilos que se usan para la parte de los textos
@@ -76,10 +78,10 @@ class ReservaHotelPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.0)
       ),
       elevation: 0.0,
-      color: Colors.blue,
+      color: Colors.green,
       textColor: Colors.white,
       onPressed: (){
-
+        InicioPage();
       },
     );
   }

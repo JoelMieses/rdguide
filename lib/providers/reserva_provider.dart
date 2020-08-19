@@ -30,7 +30,7 @@ class _reservaProvider {
       final dataMap = json.decode(dataJson);
       print("El Mensaje \n\n $dataMap");
 
-      if(dataMap["idcliente"]=='0'){
+      if(dataMap["idreserva"]=='0'){
         return Future.error({"mensaje":"reserva no se pudo guardar"});}
 
       print(dataMap);

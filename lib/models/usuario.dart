@@ -23,7 +23,7 @@ class Usuario {
   String token;
 
   factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
-    id: json["idcliente"],
+    id: int.parse( json["idcliente"]),
     nombre: json["nombre"],
     apellido: json["apellido"],
     sexo: json["sexo"],

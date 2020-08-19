@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:rdguide/bloc/bloc_provider.dart';
 import 'package:rdguide/bloc/reserva_bloc.dart';
 import 'package:rdguide/models/reserva.dart';
-import 'package:rdguide/models/usuario.dart';
 import 'package:intl/intl.dart';
 
 
@@ -21,14 +20,15 @@ class _RealizarReservaPageState extends State<RealizarReservaPage> {
 
   String _fecha = '';
 
-  final _idreservaController = new TextEditingController();
-  final _idclienteController = new TextEditingController();
-  final _idareaController = new TextEditingController();
-  final _cantidadController = new TextEditingController();
-  final _personaController = new TextEditingController();
-  //final _desdeController = new TextEditingController();
-  //final _hastaController = new TextEditingController();
-  final _comentarioontroller = new TextEditingController();
+  final _nombreController = new TextEditingController();
+  final _apellidoController = new TextEditingController();
+  final _correoController = new TextEditingController();
+  final _claveController = new TextEditingController();
+  final _repeatClaveController = new TextEditingController();
+  final _inputFieldDateController = new TextEditingController();
+  final _inputFieldhastaDateController = new TextEditingController();
+  
+
   final bloc = ReservaBloc();
 
   @override
@@ -37,7 +37,7 @@ class _RealizarReservaPageState extends State<RealizarReservaPage> {
       bloc: bloc,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Realizar reserva'),
+          title: Text('Reservar'),
           backgroundColor: Colors.green,
 
         ),
@@ -50,26 +50,24 @@ Widget _form(){
     return Form(
       key: _formKey,
       child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _textInput(controller: _idreservaController,hint: "idreserva",icon: Icons.account_circle),
-            Divider(),
-            _textInput(controller: _idclienteController,hint: "cliente id",icon: Icons.account_circle),
-            Divider(),
-            _textInput(controller: _idareaController,hint: "area",icon: Icons.account_circle),
-            Divider(),
-            _textInput(controller: _cantidadController,hint: "cantidad hab o mesas",icon: Icons.account_circle),
-            Divider(),
-            _textInput(controller: _personaController,hint: "cant personas",icon: Icons.account_circle),
-            Divider(),
-            _textInput(controller: _comentarioontroller,hint: "comentario",icon: Icons.account_circle),
-            //_sexo(),            
-            Divider(),
-            //_creaFecha(context),
-         
-            _registrar(),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.only(right: 16,left: 16,top: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              _textInput(controller: _nombreController,hint: "Nombre",icon: Icons.account_circle),
+              Divider(),
+              _textInput(controller: _apellidoController,hint: "Número habitaciones",icon: Icons.account_circle),
+               Divider(),
+              _textInput(controller: _apellidoController,hint: "Número de personas",icon: Icons.account_circle),                  
+              Divider(),
+              _creaFecha(controller: _inputFieldDateController,hint: "desde",),
+              Divider(),
+              _creaFecha(controller: _inputFieldDateController,hint: "hasta",),
+              Divider(),
+              _registrar(),
+            ],
+          ),
         ),
       ),
     );
@@ -89,7 +87,7 @@ Widget _form(){
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0)
+            borderRadius: BorderRadius.circular(8.0)
         ),
         hintText: hint,
         prefixIcon: Icon(
@@ -101,21 +99,24 @@ Widget _form(){
 
   }
 
+  //este widget es el correspondiente a las claves
+ 
 
 
   //este widget es el correspondiente al campo fecha de nacimiento
-  /*_creaFecha( BuildContext context) {
+   
+  _creaFecha( {controller: TextEditingController, hint:String}) {
 
     //final format = DateFormat("yyyy-MM-dd");
     return TextField(
       enableInteractiveSelection: false,
-      controller: _inputFieldDateController,
+      controller: controller,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0)
+            borderRadius: BorderRadius.circular(5.0)
         ),
-        hintText: 'Fecha de nacimiento',
-        labelText: 'Fecha de nacimiento',
+        hintText: hint,
+        labelText: hint,
         prefixIcon: Icon(
           Icons.calendar_today,
           color: Colors.grey,
@@ -131,7 +132,7 @@ Widget _form(){
 
       } ,
     );
-  }*/
+  }
   //este es el metodo que permite la funcionalidad del selector de fechas
   _selectDate(BuildContext context0) async{
 
@@ -147,19 +148,20 @@ Widget _form(){
       setState(() {
 
         _fecha = "${DateFormat('yyyy-MM-dd').format(picked)}";
-       // _inputFieldDateController.text = _fecha;
+        _inputFieldDateController.text = _fecha;
       });
     }
   }
 
-  //este widget es el correspondiente al campo boton registro de usuario
 
+
+ 
   Widget _registrar(){
 
     return RaisedButton(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
-        child: Text('Reservar'),
+        child: Text('Registrarse'),
       ),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0)
@@ -169,27 +171,29 @@ Widget _form(){
       textColor: Colors.white,
       onPressed: (){
 
-        if(_formKey.currentState.validate()){
-
+        
          registrar();
 
           
 
-        }
+        
       },
     );
   }
   void registrar(){
-    reserva = Reserva(idreserva:0,idcliente: 1 ,idarea:1, cantidad:2, personas: 3, desde:'2020-09-09',hasta:'2020-09-09',comentario:'esto es un comentario'  );
+    reserva = Reserva(idreserva:0,idcliente: 1,idarea:1,
+        cantidad: 1, personas: 1,desde: _fecha,hasta: _fecha,comentario:"hola" );
 
+/*  reserva = Reserva(idreserva:0,idcliente: 1,idarea: _apellidoController?.text?.trim(),
+        cantidad: _correoController?.text?.toLowerCase()?.trim(), personas: _claveController?.text?.trim()
+        ,sexo: _character.toString(),desde: _fecha,hasta: _fecha,comentario: );*/
     print(reserva);
     bloc.reserva(reserva: reserva, context: context);
+    Navigator.popAndPushNamed(context, "/reservacompleta");
+    // /reservacompleta
   }
   
 }
-
-
-
 
 
 
