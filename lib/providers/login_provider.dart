@@ -26,6 +26,8 @@ class _loginProvider {
 
     final resp = await http.get(url);
 
+    print(resp.body);
+
     if(resp.statusCode == 200){
 
 

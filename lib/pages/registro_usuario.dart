@@ -296,15 +296,12 @@ class RadioButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      home: Scaffold(
+    return Scaffold(
 
         appBar: AppBar(title: const Text(_title)),
         body: Center(
           child: MyStatefulWidget(),
         ),
-      ),
     );
   }
 }
@@ -316,6 +313,7 @@ class MyStatefulWidget extends StatefulWidget {
 
   @override
   _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {

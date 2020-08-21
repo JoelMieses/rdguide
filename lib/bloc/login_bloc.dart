@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:rdguide/bloc/bloc.dart';
 import 'package:rdguide/models/usuario.dart';
 import 'package:rdguide/providers/login_provider.dart';
@@ -19,9 +20,7 @@ class LoginBloc extends Bloc{
   Function(bool) get _loadingSink => _loadingController.sink.add;
   Stream<bool> get loadingStream => _loadingController.stream;
 
-  final StreamController _errorController = StreamController<String>.broadcast();
-  Function(String) get _errorSink => _errorController.sink.add;
-  Stream<String> get errorStream => _errorController.stream;
+
 
 
 
@@ -39,7 +38,7 @@ class LoginBloc extends Bloc{
       if(result != null){
         sharedPreferences.saveLogin(result);
         if(result.token != null || result.token.isNotEmpty){
-          Navigator.pushNamed(context, '/home');
+          Navigator.pushReplacementNamed(context, '/home');
         }
       }
       _loginSink(result);
@@ -47,16 +46,35 @@ class LoginBloc extends Bloc{
         })
         .catchError((error,stackTrace){
       _loadingSink(false);
-      _errorSink(error['mensaje']);
+      _showSnakBar(error['mensaje'],context);
 
         });
 
+  }
+  _showSnakBar(String msg,BuildContext context) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Error!!",style: TextStyle(color: Colors.red,fontSize: 20),),
+          content: Text(msg),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Aceptar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   void dispose() {
     _loginController.close();
     _loadingController.close();
-    _errorController.close();
   }
 }

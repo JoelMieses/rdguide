@@ -21,26 +21,26 @@ class _registroProvider {
     final result = await http.post(url,headers: header,body: body);
     print(body);
 
-    print(result.body);
+    print(result.statusCode);
 
     if(result.statusCode == 200){
 
 
       final dataJson = result.body;
+
+      print(dataJson);
       final dataMap = json.decode(dataJson);
       print("El Mensaje \n\n $dataMap");
 
-      if(dataMap["idcliente"]=='0'){
-        return Future.error({"mensaje":"Usuario no se pudo guardar"});}
-
-      print(dataMap);
-      usuariores = Usuario.fromJson(dataMap['item2'][0]);
+      usuariores = Usuario.fromJson(dataMap);
 
       print(usuariores.toString());
+      return usuariores;
 
+    } else {
+      print("Hay un errror");
+        return Future.error({"mensaje":"Usuario no se pudo registrar"});
     }
-    return usuariores;
-
 
   }
 

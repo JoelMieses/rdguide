@@ -7,6 +7,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final String IS_LOGGED = "isLogged";
 final String USER_TOKEN = "userToken";
+final String NOMBRE = "user_nombre";
+final String APELLIDO = "user_apellido";
+final String EMAIL = "user_email";
+final String SEXO = "user_sexo";
+final String FECHANAC = "user_nac";
 class _SharedPreferences {
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -21,8 +26,12 @@ class _SharedPreferences {
 
     if(prefs!=null && user !=null){
       print("SharedP ${user.toString()}");
-      prefs.setString("user_nombre", user.nombre);
-      prefs.setString("user_correo", user.email);
+      prefs.setString(NOMBRE, user.nombre);
+      prefs.setString(EMAIL, user.email);
+      prefs.setString(APELLIDO, user.apellido);
+      prefs.setString(SEXO, user.sexo);
+      prefs.setString(FECHANAC, user.fechanac);
+
       prefs.setString(USER_TOKEN, user.token);
       prefs.setBool(IS_LOGGED, true);
 
@@ -30,6 +39,20 @@ class _SharedPreferences {
 
     }
   }
+
+  Future<Usuario> getUsuario() async{
+    final SharedPreferences prefs = await _prefs;
+    Usuario usuario = Usuario();
+    usuario.fechanac =  prefs.getString(FECHANAC);
+    usuario.apellido = prefs.getString(APELLIDO);
+    usuario.nombre = prefs.getString(NOMBRE);
+    usuario.sexo = prefs.getString(SEXO);
+    usuario.email = prefs.getString(EMAIL);
+
+    return usuario;
+  }
+
+
 
   Future<String> getToken() async {
     final SharedPreferences prefs = await _prefs;

@@ -40,8 +40,8 @@ class RegistroBloc extends Bloc{
 
       _loadingSink(false);
       if(result != null){
-        if(result.id != "0" ){
-         // Navigator.pop(context);
+        if(result is Usuario){
+         _showAlert( context);
         }
       }
       _registroSink(result);
@@ -49,11 +49,55 @@ class RegistroBloc extends Bloc{
     })
         .catchError((error,stackTrace){
       _loadingSink(false);
-      _errorSink(error['mensaje']);
+      print(error);
+      _showError(error['mensaje'],context);
 
     });
 
   }
+
+  _showAlert(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Felicidades!!",style: TextStyle(color: Colors.green,fontSize: 20),),
+          content: Text("Usuario registrado Correctamente"),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Iniciar Sesion'),
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/login');
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _showError(String msg,BuildContext context) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Error!!",style: TextStyle(color: Colors.red,fontSize: 20),),
+          content: Text(msg),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Aceptar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   @override
   void dispose() {

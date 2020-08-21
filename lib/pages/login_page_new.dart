@@ -1,4 +1,6 @@
 
+import 'dart:ffi';
+
 import 'package:rdguide/bloc/bloc_provider.dart';
 import 'package:rdguide/bloc/login_bloc.dart';
 import 'package:rdguide/services/authenticator.dart';
@@ -232,7 +234,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
             loading(bloc),
-          error(bloc)
+          //error(bloc)
         ],
       ),
     );
@@ -260,35 +262,35 @@ class _LoginPageState extends State<LoginPage> {
       }
     );
   }
-  Widget error(LoginBloc bloc ) {
-    return StreamBuilder(
-        stream: bloc.errorStream,
-        builder: (context, AsyncSnapshot<String> snapshot) {
-          return Center(
-            child: (snapshot.hasData && snapshot.data.isNotEmpty)?
-            AlertDialog(
-
-              title: Row(
-                children: <Widget>[
-                  Icon(Icons.error,color: Colors.red,),
-                  Text("Atencion!!"),
-                ],
-              ),
-              content: Text(snapshot.data),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('Aceptar'),
-                  onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
-                ),
-              ],
-            )
-
-
-
-                :null,
-          );
-        }
-    );
-  }
+//  Widget error(LoginBloc bloc ) {
+//    return StreamBuilder(
+//        stream: bloc.errorStream,
+//        builder: (context, AsyncSnapshot<String> snapshot) {
+//           if(snapshot.hasData && snapshot.data.isNotEmpty){
+//              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+//                showDialog(context: context,child:
+//                AlertDialog(
+//
+//                  title: Row(
+//                    children: <Widget>[
+//                      Icon(Icons.error,color: Colors.red,),
+//                      Text("Atencion!!"),
+//                    ],
+//                  ),
+//                  content: Text(snapshot.data),
+//                  actions: <Widget>[
+//                    FlatButton(
+//                      child: Text('Aceptar'),
+//                      onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+//                    ),
+//                  ],
+//                ));
+//              });
+//          }
+//           else null
+//
+//        }
+//    );
+//  }
 }
 

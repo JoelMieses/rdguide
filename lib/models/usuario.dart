@@ -23,7 +23,7 @@ class Usuario {
   String token;
 
   factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
-    id: json["idcliente"],
+    id: int.parse(json["idcliente"].toString()),
     nombre: json["nombre"],
     apellido: json["apellido"],
     sexo: json["sexo"],
@@ -32,9 +32,6 @@ class Usuario {
     clave: json["clave"],
     token: json["token"],
   );
-  factory Usuario.toPost(){
-
-  }
 
   Map<String, dynamic> toJson() => {
     "idcliente": id,
