@@ -223,13 +223,15 @@ class PerfilNewPage extends StatelessWidget {
   }
 
   String getSexo(String sex){
+    if(sex != null && sex.isNotEmpty){
     switch(sex.toUpperCase()){
       case "F":{return "Femenino";}
       case "M":{return "Masculino";}
       default: {
         return "N/A";
       }
-    }
+    }}
+    return "N/A";
   }
 
 }

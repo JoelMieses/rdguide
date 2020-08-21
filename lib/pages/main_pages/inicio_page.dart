@@ -108,7 +108,8 @@ class InicioPageState extends State<InicioPage>{
                   return SwiperWidget(titulo: titulo,elementos: result,onTap:irDestino ,);
                 }else{
                   return Container(
-                    child: CircularProgressIndicator(),
+                    height: MediaQuery.of(context).size.height*0.2,
+                    child: Center(child: CircularProgressIndicator()),
                   );
                 }
       },
@@ -131,7 +132,8 @@ void irEvento(dynamic destino){
             return SwiperWidget(titulo: titulo,elementos: result,onTap: irEvento,);
           }else{
             return Container(
-              child: CircularProgressIndicator(),
+              height: MediaQuery.of(context).size.height*0.2,
+              child: Center(child: CircularProgressIndicator()),
             );
           }
         },

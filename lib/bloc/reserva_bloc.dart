@@ -40,8 +40,8 @@ class ReservaBloc extends Bloc{
 
       _loadingSink(false);
       if(result != null){
-        if(result.idreserva != "0" ){
-         // Navigator.pop(context);
+        if(result.idreserva != 0 ){
+          Navigator.popAndPushNamed(context, "/reservacompleta");
         }
       }
       _reservaSink(result);
@@ -49,7 +49,8 @@ class ReservaBloc extends Bloc{
     })
         .catchError((error,stackTrace){
       _loadingSink(false);
-      _errorSink(error['mensaje']);
+      print(error);
+      //_errorSink(error['mensaje']);
 
     });
 

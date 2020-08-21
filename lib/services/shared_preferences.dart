@@ -12,6 +12,7 @@ final String APELLIDO = "user_apellido";
 final String EMAIL = "user_email";
 final String SEXO = "user_sexo";
 final String FECHANAC = "user_nac";
+final String ID = "user_id";
 class _SharedPreferences {
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -31,7 +32,7 @@ class _SharedPreferences {
       prefs.setString(APELLIDO, user.apellido);
       prefs.setString(SEXO, user.sexo);
       prefs.setString(FECHANAC, user.fechanac);
-
+      prefs.setInt(ID, user.id);
       prefs.setString(USER_TOKEN, user.token);
       prefs.setBool(IS_LOGGED, true);
 
@@ -48,6 +49,7 @@ class _SharedPreferences {
     usuario.nombre = prefs.getString(NOMBRE);
     usuario.sexo = prefs.getString(SEXO);
     usuario.email = prefs.getString(EMAIL);
+    usuario.id = prefs.getInt(ID);
 
     return usuario;
   }

@@ -39,7 +39,7 @@ class _registroProvider {
 
     } else {
       print("Hay un errror");
-        return Future.error({"mensaje":"Usuario no se pudo registrar"});
+        return Future.error({"mensaje":"Usuario no se pudo registrar\n ${result.reasonPhrase}"});
     }
 
   }

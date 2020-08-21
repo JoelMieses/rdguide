@@ -39,8 +39,24 @@ class _RegistroUsuarioPageState extends State<RegistroUsuarioPage> {
           backgroundColor: Colors.green,
 
         ),
-        body: _form()
+        body: Stack(
+          children: <Widget>[
+            _form(),
+            _loading(bloc)
+          ],
+        )
       ),
+    );
+  }
+
+  Widget _loading(RegistroBloc bloc ) {
+    return StreamBuilder(
+        stream: bloc.loadingStream,
+        builder: (context, AsyncSnapshot<bool> snapshot) {
+          return Center(
+            child: (snapshot.hasData && snapshot.data)? CircularProgressIndicator():null,
+          );
+        }
     );
   }
 
@@ -282,7 +298,7 @@ Widget _form(){
         email: _correoController?.text?.toLowerCase()?.trim(), clave: _claveController?.text?.trim()
         ,sexo: _character.toString(),fechanac: _fecha);
 
-    print(usuario);
+    bloc.enviar();
     bloc.registro(usuario: usuario, context: context);
   }
   bool validatePassword(){

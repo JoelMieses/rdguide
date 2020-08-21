@@ -24,11 +24,11 @@ class Reserva {
   //String token;
 
   factory Reserva.fromJson(Map<String, dynamic> json) => Reserva(
-    idreserva: int.parse(json["idreserva"]),
-    idcliente:int.parse( json["idcliente"]),
-    idarea: int.parse(json["idarea"]),
-    cantidad: int.parse(json["cantidad"]),
-    personas:int.parse( json["personas"]),
+    idreserva: int.parse(json["idreserva"].toString()),
+    idcliente:int.parse( json["idcliente"].toString()),
+    idarea: int.parse(json["idarea"].toString()),
+    cantidad: int.parse(json["cantidad"].toString()),
+    personas:int.parse( json["personas"].toString()),
     desde: json["desde"],
     hasta: json["hasta"],
     comentario: json["comentario"],

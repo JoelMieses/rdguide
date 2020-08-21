@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:rdguide/bloc/bloc_provider.dart';
 import 'package:rdguide/bloc/reserva_bloc.dart';
+import 'package:rdguide/models/areas.dart';
 import 'package:rdguide/models/reserva.dart';
 import 'package:intl/intl.dart';
+import 'package:rdguide/services/shared_preferences.dart';
 
 
 class RealizarReservaPage extends StatefulWidget {
@@ -18,21 +20,27 @@ final _formKey = GlobalKey<FormState>();
 
 class _RealizarReservaPageState extends State<RealizarReservaPage> {
 
-  String _fecha = '';
 
+
+  String _fechaDesde = '';
+  String _fechaHasta = '';
+
+  final _cantHabitacionesController = new TextEditingController();
   final _nombreController = new TextEditingController();
-  final _apellidoController = new TextEditingController();
-  final _correoController = new TextEditingController();
-  final _claveController = new TextEditingController();
-  final _repeatClaveController = new TextEditingController();
+  final _cantPersonasController = new TextEditingController();
   final _inputFieldDateController = new TextEditingController();
   final _inputFieldhastaDateController = new TextEditingController();
-  
+   Area area = new Area();
+  String nombre = null;
+  int userId = 0;
 
   final bloc = ReservaBloc();
 
   @override
   Widget build(BuildContext context) {
+   area = ModalRoute.of(context).settings.arguments;
+   _nombreController.text = nombre;
+   getUsuario();
     return BlocProvider(
       bloc: bloc,
       child: Scaffold(
@@ -45,7 +53,15 @@ class _RealizarReservaPageState extends State<RealizarReservaPage> {
       ),
     );
   }
-
+void getUsuario()async{
+    final user = await sharedPreferences.getUsuario();
+    if(user.nombre.isNotEmpty && user.apellido.isNotEmpty){
+      setState(() {
+        nombre = "${user.nombre} ${user.apellido}";
+        userId = user.id;
+      });
+    }
+}
 Widget _form(){
     return Form(
       key: _formKey,
@@ -57,13 +73,13 @@ Widget _form(){
             children: <Widget>[
               _textInput(controller: _nombreController,hint: "Nombre",icon: Icons.account_circle),
               Divider(),
-              _textInput(controller: _apellidoController,hint: "Número habitaciones",icon: Icons.account_circle),
+              _textInput(controller: _cantHabitacionesController,hint: "Número habitaciones",icon: Icons.account_circle),
                Divider(),
-              _textInput(controller: _apellidoController,hint: "Número de personas",icon: Icons.account_circle),                  
+              _textInput(controller: _cantPersonasController,hint: "Número de personas",icon: Icons.account_circle),
               Divider(),
-              _creaFecha(controller: _inputFieldDateController,hint: "desde",),
+              _desdeFecha(),
               Divider(),
-              _creaFecha(controller: _inputFieldDateController,hint: "hasta",),
+              _hastaFecha(),
               Divider(),
               _registrar(),
             ],
@@ -79,12 +95,12 @@ Widget _form(){
   Widget _textInput({controller: TextEditingController, icon: IconData,hint:String}) {
     return TextFormField(
       controller: controller,
+      keyboardType: TextInputType.number,
       validator: (value){
         if(value.isEmpty){
           return "Este campo no puede estar vacio";
         }return null;
       },
-      textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.0)
@@ -105,18 +121,18 @@ Widget _form(){
 
   //este widget es el correspondiente al campo fecha de nacimiento
    
-  _creaFecha( {controller: TextEditingController, hint:String}) {
+  _desdeFecha() {
 
     //final format = DateFormat("yyyy-MM-dd");
     return TextField(
       enableInteractiveSelection: false,
-      controller: controller,
+      controller: _inputFieldDateController,
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5.0)
         ),
-        hintText: hint,
-        labelText: hint,
+        hintText: "Desde",
+        labelText: "Desde",
         prefixIcon: Icon(
           Icons.calendar_today,
           color: Colors.grey,
@@ -128,27 +144,75 @@ Widget _form(){
       onTap: (){
 
         FocusScope.of(context).requestFocus(new FocusNode());
-        _selectDate(context);
+        _selectDesdeDate(context);
+
+      } ,
+    );
+  }
+  _hastaFecha() {
+
+    //final format = DateFormat("yyyy-MM-dd");
+    return TextField(
+      enableInteractiveSelection: false,
+      controller: _inputFieldhastaDateController,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0)
+        ),
+        hintText: "Hasta",
+        labelText: "Hasta",
+        prefixIcon: Icon(
+          Icons.calendar_today,
+          color: Colors.grey,
+        ),
+
+      ),
+      //aqui lo que hacemos es que cuando se haga click en el boton llame al metodo _selectDate para que
+      //el datepicker abra el selector de fechas
+      onTap: (){
+
+        FocusScope.of(context).requestFocus(new FocusNode());
+        _selectHastaDate(context);
 
       } ,
     );
   }
   //este es el metodo que permite la funcionalidad del selector de fechas
-  _selectDate(BuildContext context0) async{
+  _selectDesdeDate(BuildContext context) async{
 
     DateTime picked =  await showDatePicker(
         context: context,
         initialDate: new DateTime.now(),
-        firstDate: new DateTime(1940),
-        lastDate: new DateTime.now(),
+        firstDate: new DateTime.now(),
+        lastDate: new DateTime.now().add(Duration(days: 365)),
         locale: Locale('es', 'ES')
     );
 
     if (picked !=null){
       setState(() {
 
-        _fecha = "${DateFormat('yyyy-MM-dd').format(picked)}";
-        _inputFieldDateController.text = _fecha;
+        _fechaDesde = "${DateFormat('yyyy-MM-dd').format(picked)}";
+        _inputFieldDateController.text = _fechaDesde;
+      });
+    }
+  }
+
+  //este es el metodo que permite la funcionalidad del selector de fechas
+  _selectHastaDate(BuildContext context) async{
+
+    DateTime picked =  await showDatePicker(
+        context: context,
+        initialDate: new DateTime.now(),
+        firstDate: new DateTime.now(),
+        lastDate: new DateTime.now().add(Duration(days: 365)),
+        locale: Locale('es', 'ES')
+    );
+
+    if (picked !=null){
+      setState(() {
+
+        _fechaHasta = "${DateFormat('yyyy-MM-dd').format(picked)}";
+        _inputFieldhastaDateController.text = _fechaHasta;
       });
     }
   }
@@ -181,15 +245,16 @@ Widget _form(){
     );
   }
   void registrar(){
-    reserva = Reserva(idreserva:0,idcliente: 1,idarea:1,
-        cantidad: 1, personas: 1,desde: _fecha,hasta: _fecha,comentario:"hola" );
+    reserva = Reserva(idreserva:0,idcliente: userId,idarea:int.parse(area.id),
+        cantidad: int.parse(_cantHabitacionesController?.text?.trim()),
+        personas:int.parse(_cantPersonasController?.text?.trim()),desde: _fechaDesde,hasta: _fechaHasta,comentario:"hola" );
 
 /*  reserva = Reserva(idreserva:0,idcliente: 1,idarea: _apellidoController?.text?.trim(),
         cantidad: _correoController?.text?.toLowerCase()?.trim(), personas: _claveController?.text?.trim()
         ,sexo: _character.toString(),desde: _fecha,hasta: _fecha,comentario: );*/
     print(reserva);
     bloc.reserva(reserva: reserva, context: context);
-    Navigator.popAndPushNamed(context, "/reservacompleta");
+   // Navigator.popAndPushNamed(context, "/reservacompleta");
     // /reservacompleta
   }
   

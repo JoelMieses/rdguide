@@ -8,18 +8,18 @@ class _reservaProvider {
 
   final _url = UtilProvider.getUrl;
 
-  Future<Reserva> postReserva(Reserva reserva)async{
+  Future<Reserva> postReserva(Reserva reservaP)async{
     Reserva reserva = new Reserva();
     final url = Uri.http(_url, "/SetReserva");
 
     final Map<String,String> header = {"Token":"mn3db5NQVU5fYWeBJKscUQ==","Content-Type": "application/json"};
-    final body = json.encode(reserva.toJson());
+    final body = json.encode(reservaP.toJson());
 
     print("el header${header}");
-
+    print("La Reserva ${reservaP}");
 
     final result = await http.post(url,headers: header,body: body);
-    print(body);
+
 
     print(result.body);
 
@@ -34,7 +34,7 @@ class _reservaProvider {
         return Future.error({"mensaje":"reserva no se pudo guardar"});}
 
       print(dataMap);
-      reserva = Reserva.fromJson(dataMap['item2'][0]);
+      reserva = Reserva.fromJson(dataMap);
 
       print(reserva.toString());
 

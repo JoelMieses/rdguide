@@ -24,7 +24,7 @@ class ReservaHotelPage extends StatelessWidget {
             SizedBox(height:20.0),
             _creartitulo(),
             SizedBox(height:20.0),
-            _volver()
+            _volver(context)
             // _crearAcciones(),
           ],
         ),
@@ -67,7 +67,7 @@ class ReservaHotelPage extends StatelessWidget {
     );
   }
   //este es el boton que se muestra en la pagina
-  Widget _volver(){
+  Widget _volver(BuildContext context){
 
     return RaisedButton(
       child: Container(
@@ -81,7 +81,7 @@ class ReservaHotelPage extends StatelessWidget {
       color: Colors.green,
       textColor: Colors.white,
       onPressed: (){
-        InicioPage();
+        Navigator.pushReplacementNamed(context, "/home");
       },
     );
   }

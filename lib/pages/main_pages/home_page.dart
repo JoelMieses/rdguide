@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rdguide/pages/main_pages/inicio_page.dart';
 import 'package:rdguide/providers/login_provider.dart';
 import '../configuracion_page.dart';
+import '../lista_reservas_page.dart';
 
 class HomePage extends StatefulWidget{
   @override
@@ -26,9 +27,6 @@ class HomePageState extends State<HomePage>{
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             title: Text("Inicio")
-          ),BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border),
-            title: Text("Favoritos")
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today),
@@ -60,18 +58,12 @@ class HomePageState extends State<HomePage>{
       case 0:{
         return InicioPage();
       }
+
       case 1:{
-        return FavoritosPage();
+        return  ListaReservasPage();
       }
 
       case 2:{
-        return Center(
-          child: Text("Vista # 3", style: TextStyle(fontSize: 20),),
-
-        );
-      }
-
-      case 3:{
         return ConfiPage();
       }
 
