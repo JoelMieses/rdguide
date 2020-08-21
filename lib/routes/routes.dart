@@ -19,6 +19,7 @@ import 'package:rdguide/pages/opcion_guias.dart';
 import 'package:rdguide/pages/pagar_reservacion.dart';
 import 'package:rdguide/pages/perfil_usuario_new.dart';
 import 'package:rdguide/pages/realizar_reserva.dart';
+import 'package:rdguide/pages/reserva_comple.dart';
 import 'package:rdguide/pages/termino_servicio_page.dart';
 import 'package:flutter/material.dart';
 import 'package:rdguide/pages/main_pages/home_page.dart';
@@ -36,7 +37,7 @@ Map<String, WidgetBuilder> getAplicationRoutes() {
     '/home':              (BuildContext context) => HomePage(),
     '/login':             (BuildContext context) => LoginPage(),
     '/register':          (BuildContext context) => RegistroUsuarioPage(),
-    // '/cuenta':            (BuildContext context) => PerfilPage(),
+    ///cuenta':            (BuildContext context) => PerfilPage(),
     '/cuentaNew':         (BuildContext context) => PerfilNewPage(),
     '/seguridad':         (BuildContext context) => SeguridadPage(),
     '/notificaciones':    (BuildContext context) => NotificationPage(),
@@ -59,11 +60,12 @@ Map<String, WidgetBuilder> getAplicationRoutes() {
     '/evento':            (BuildContext context) => EventoPage(),
     '/detallearea':       (BuildContext context) => HotelDetalleArea(),
     '/realizarreserva':   (BuildContext context) => RealizarReservaPage(),
-    '/MapaG'            : (BuildContext context) => MapaG(),
-    '/guia1'            : (BuildContext context) => Guia1Page(),
-    '/guia2'            : (BuildContext context) => Guia2Page(),
-    '/guia3'            : (BuildContext context) => Guia3Page(),
-    '/opcionguias'      : (BuildContext context) => OpcionGuiasPage()
+    '/MapaG':             (BuildContext context) => MapaG(),
+    '/guia1':             (BuildContext context) => Guia1Page(),
+    '/guia2':             (BuildContext context) => Guia2Page(),
+    '/guia3':             (BuildContext context) => Guia3Page(),
+    '/opcionguias':       (BuildContext context) => OpcionGuiasPage(),
+    '/reservacompleta':   (BuildContext context) => ReservaHotelPage()
 
   };
 }

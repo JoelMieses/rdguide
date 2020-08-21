@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 class Usuario {
   Usuario({
     this.id,
@@ -23,25 +22,25 @@ class Usuario {
   String token;
 
   factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
-    id: int.parse(json["idcliente"].toString()),
-    nombre: json["nombre"],
-    apellido: json["apellido"],
-    sexo: json["sexo"],
-    fechanac: json["fechanac"],
-    email: json["email"],
-    clave: json["clave"],
-    token: json["token"],
-  );
+        id: int.parse(json["idcliente"].toString()),
+        nombre: json["nombre"],
+        apellido: json["apellido"],
+        sexo: json["sexo"],
+        fechanac: json["fechanac"],
+        email: json["email"],
+        clave: json["clave"],
+        token: json["token"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "idcliente": id,
-    "nombre": nombre,
-    "apellido": apellido,
-    "sexo": sexo,
-    "fechanac": fechanac,
-    "email": email,
-    "clave": clave,
-  };
+        "idcliente": id,
+        "nombre": nombre,
+        "apellido": apellido,
+        "sexo": sexo,
+        "fechanac": fechanac,
+        "email": email,
+        "clave": clave,
+      };
 
   @override
   String toString() {
