@@ -73,7 +73,7 @@ class _ConfiPage extends State<ConfiPage> {
   _cuenta(){
     return Container(
       width: double.infinity,
-      height: 50.0,
+      height: 40.0,
       child: FlatButton(
         textColor: Colors.black,
         splashColor: Colors.grey,
@@ -83,7 +83,7 @@ class _ConfiPage extends State<ConfiPage> {
         //icon: Icon(Icons.vpn_key),
           child: Align(
             alignment: Alignment.topLeft,
-            child: Text("Perfil de Usuario", style: TextStyle(fontSize: 18.0),)),
+            child: Text("Perfil de Usuario", style: TextStyle(fontSize: 18.0,),)),
       ),
     );
   }

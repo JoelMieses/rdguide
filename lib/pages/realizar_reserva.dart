@@ -125,11 +125,7 @@ Widget _form(){
       controller: controller,
       keyboardType: TextInputType.multiline,
       maxLines: 4,
-      validator: (value){
-        if(value.isEmpty){
-          return "Este campo no puede estar vacio";
-        }return null;
-      },
+      
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.0)
