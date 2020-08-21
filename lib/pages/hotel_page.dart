@@ -13,7 +13,7 @@ class _HotelPageState extends State<HotelPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, 'MapaG');
+          Navigator.pushNamed(context, '/MapaG');
         },
         backgroundColor: Colors.green,
         child: Icon(Icons.location_on),
@@ -51,17 +51,17 @@ class _HotelPageState extends State<HotelPage> {
                       decoration: BoxDecoration(
                           color: Colors.grey,
                           borderRadius: BorderRadius.circular(20.0)),
-                      child: Text(
+                     /* child: Text(
                         "8.4/85 opiniones",
                         style: TextStyle(color: Colors.white, fontSize: 13.0),
-                      ),
+                      ),*/
                     ),
                     Spacer(),
-                    IconButton(
+                   /* IconButton(
                       color: Colors.white,
                       icon: Icon(Icons.favorite_border),
                       onPressed: () {},
-                    )
+                    )*/
                   ],
                 ),
                 Container(

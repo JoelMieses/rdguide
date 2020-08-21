@@ -61,8 +61,8 @@ class InicioPageState extends State<InicioPage>{
       padding: const EdgeInsets.all(12.0),
       child: Row(
         mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Text("RD Guide", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: Colors.green),),
+        children: <Widget>[          
+          Text("Bienvenidos", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600,color: Colors.black45),),
           Spacer(),
           GestureDetector(
             onTap: (){

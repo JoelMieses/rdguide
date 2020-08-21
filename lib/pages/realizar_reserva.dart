@@ -30,6 +30,7 @@ class _RealizarReservaPageState extends State<RealizarReservaPage> {
   final _cantPersonasController = new TextEditingController();
   final _inputFieldDateController = new TextEditingController();
   final _inputFieldhastaDateController = new TextEditingController();
+  final _comentarioController = new TextEditingController();
    Area area = new Area();
   String nombre = null;
   int userId = 0;
@@ -81,6 +82,8 @@ Widget _form(){
               Divider(),
               _hastaFecha(),
               Divider(),
+              _comentario(controller: _comentarioController,hint: "Comentario",icon: Icons.comment),
+              Divider(),              
               _registrar(),
             ],
           ),
@@ -96,6 +99,30 @@ Widget _form(){
     return TextFormField(
       controller: controller,
       keyboardType: TextInputType.number,
+      validator: (value){
+        if(value.isEmpty){
+          return "Este campo no puede estar vacio";
+        }return null;
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0)
+        ),
+        hintText: hint,
+        prefixIcon: Icon(
+          icon,
+          color: Colors.grey,
+        ),
+      ),
+    );
+
+  }
+
+  Widget _comentario({controller: TextEditingController, icon: IconData,hint:String}) {
+    return TextFormField(
+      controller: controller,
+      keyboardType: TextInputType.multiline,
+      maxLines: 4,
       validator: (value){
         if(value.isEmpty){
           return "Este campo no puede estar vacio";
@@ -225,7 +252,7 @@ Widget _form(){
     return RaisedButton(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
-        child: Text('Registrarse'),
+        child: Text('Reservar'),
       ),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0)
@@ -247,7 +274,7 @@ Widget _form(){
   void registrar(){
     reserva = Reserva(idreserva:0,idcliente: userId,idarea:int.parse(area.id),
         cantidad: int.parse(_cantHabitacionesController?.text?.trim()),
-        personas:int.parse(_cantPersonasController?.text?.trim()),desde: _fechaDesde,hasta: _fechaHasta,comentario:"hola" );
+        personas:int.parse(_cantPersonasController?.text?.trim()),desde: _fechaDesde,hasta: _fechaHasta,comentario:_comentarioController?.text?.trim() );
 
 /*  reserva = Reserva(idreserva:0,idcliente: 1,idarea: _apellidoController?.text?.trim(),
         cantidad: _correoController?.text?.toLowerCase()?.trim(), personas: _claveController?.text?.trim()

@@ -66,14 +66,14 @@ class _DetallePageState extends State<DetallePage> {
                       ),
                     ),
                     Spacer(),
-                    IconButton(
+                   /* IconButton(
                       color: Colors.white,
                       icon: CircleAvatar(
                         backgroundColor: Colors.white,
                         child: Icon(Icons.favorite_border),
                       ),
                       onPressed: () {},
-                    )
+                    )*/
                   ],
                 ),
                 Container(

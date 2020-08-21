@@ -63,27 +63,30 @@ class _RegistroUsuarioPageState extends State<RegistroUsuarioPage> {
 Widget _form(){
     return Form(
       key: _formKey,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _textInput(controller: _nombreController,hint: "Nombre",icon: Icons.account_circle),
-            Divider(),
-            _textInput(controller: _apellidoController,hint: "Apellido",icon: Icons.account_circle),
-            //Divider(),
-            //_sexo(),
-            MyStatefulWidget(),
-            Divider(),
-            _creaFecha(context),
-            Divider(),
-            _email(),
-            Divider(),
-            _claveInput(controller: _claveController,hint: "Contraseña"),
-            Divider(),
-            _claveInput(controller: _repeatClaveController,hint: "Confirmar Contraseña"),
-            Divider(),
-            _registrar(),
-          ],
+      child: Padding(
+        padding: const EdgeInsets.only(right: 16,left: 16,top: 16),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              _textInput(controller: _nombreController,hint: "Nombre",icon: Icons.account_circle),
+              Divider(),
+              _textInput(controller: _apellidoController,hint: "Apellido",icon: Icons.account_circle),
+              //Divider(),
+              //_sexo(),
+              MyStatefulWidget(),
+              Divider(),
+              _creaFecha(context),
+              Divider(),
+              _email(),
+              Divider(),
+              _claveInput(controller: _claveController,hint: "Contraseña"),
+              Divider(),
+              _claveInput(controller: _repeatClaveController,hint: "Confirmar Contraseña"),
+              Divider(),
+              _registrar(),
+            ],
+          ),
         ),
       ),
     );
@@ -103,7 +106,7 @@ Widget _form(){
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0)
+            borderRadius: BorderRadius.circular(6.0)
         ),
         hintText: hint,
         prefixIcon: Icon(
@@ -133,7 +136,7 @@ Widget _form(){
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0)
+            borderRadius: BorderRadius.circular(6.0)
         ),
         hintText: hint,
         prefixIcon: Icon(
@@ -155,7 +158,7 @@ Widget _form(){
       controller: _inputFieldDateController,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0)
+            borderRadius: BorderRadius.circular(6.0)
         ),
         hintText: 'Fecha de nacimiento',
         labelText: 'Fecha de nacimiento',
@@ -210,7 +213,7 @@ Widget _form(){
       textCapitalization: TextCapitalization.none,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0)
+            borderRadius: BorderRadius.circular(6.0)
         ),
         hintText: "xxxxxx@ejemplo.com",
         prefixIcon: Icon(
@@ -272,7 +275,7 @@ Widget _form(){
         child: Text('Registrarse'),
       ),
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0)
+          borderRadius: BorderRadius.circular(6.0)
       ),
       elevation: 0.0,
       color: Colors.green,

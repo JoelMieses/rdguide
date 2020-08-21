@@ -68,14 +68,14 @@ String idLugar="";
                       ),
                     ),
                     Spacer(),
-                    IconButton(
+                    /*IconButton(
                       color: Colors.white,
                       icon: CircleAvatar(
                         backgroundColor: Colors.white,
                         child: Icon(Icons.favorite_border),
                       ) ,
                       onPressed: () {},
-                    )
+                    )*/
                   ],
                 ),
                 Container(
@@ -115,7 +115,7 @@ String idLugar="";
                               horizontal: 60.0,
                             ),
                             onPressed: () {
-                              _lansarWhatsapp();},
+                              _lansarllamada();},
                           ),
                 )
               ],
@@ -148,7 +148,7 @@ void irDestino(dynamic destino){
 
 
 
-
+/*
 _lansarWhatsapp() async {
   const url = 'https://wa.me/18298662767';
   if (await canLaunch(url)) {
@@ -157,7 +157,7 @@ _lansarWhatsapp() async {
     throw 'No se pudo iniciar $url';
   }
 }
-
+*/
 _lansarllamada() async {
     const url = "tel:18298662767";   
     if (await canLaunch(url)) {

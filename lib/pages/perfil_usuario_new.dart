@@ -7,7 +7,7 @@ import 'package:rdguide/models/usuario.dart';
 class PerfilNewPage extends StatelessWidget {
 
   final image =
-      'https://www.mundodeportivo.com/r/GODO/MD/p7/Futbol/Imagenes/2020/04/06/Recortada/img_agomezo_20200326-110529_imagenes_md_otras_fuentes_gettyimages-1205035438-kT0F-U48336284567QyD-980x554@MundoDeportivo-Web.jpg';
+      'https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png';
   @override
   Widget build(BuildContext context) {
     final bloc = PerfilBloc();
@@ -23,7 +23,7 @@ class PerfilNewPage extends StatelessWidget {
                   height: 250,
                   width: double.infinity,
                   child: Image.network(
-                    image,
+                    "https://www.inoutviajes.com/fotos/20/8857_Seven_Mile.jpg",
                     fit: BoxFit.cover,
                   )),
                   _perfilInfo(bloc),
@@ -155,19 +155,7 @@ class PerfilNewPage extends StatelessWidget {
                               fontSize: 16,
                             )),
                       ),
-                      ListTile(
-                        title: Text(
-                          "Edad",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Text("27",
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 16,
-                            )),
-                      ),
+                      
                       ListTile(
                         title: Text(
                           "Télefono",
