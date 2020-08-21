@@ -46,6 +46,7 @@ class _RealizarReservaPageState extends State<RealizarReservaPage> {
       bloc: bloc,
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text('Reservar'),
           backgroundColor: Colors.green,
 
@@ -72,11 +73,12 @@ Widget _form(){
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              Text("${nombre} Gracias por reservar con nosotros \n Favor complete los siguientes datos:\n",textAlign: TextAlign.center,),
               _textInput(controller: _nombreController,hint: "Nombre",icon: Icons.account_circle),
-              Divider(),
-              _textInput(controller: _cantHabitacionesController,hint: "Número habitaciones",icon: Icons.account_circle),
+              Divider(),              
+              _textInput(controller: _cantHabitacionesController,hint: "Número habitaciones",icon: Icons.list),
                Divider(),
-              _textInput(controller: _cantPersonasController,hint: "Número de personas",icon: Icons.account_circle),
+              _textInput(controller: _cantPersonasController,hint: "Número de personas",icon: Icons.people),
               Divider(),
               _desdeFecha(),
               Divider(),
@@ -151,21 +153,29 @@ Widget _form(){
   _desdeFecha() {
 
     //final format = DateFormat("yyyy-MM-dd");
-    return TextField(
+    return TextFormField(
       enableInteractiveSelection: false,
       controller: _inputFieldDateController,
+      validator:(value){
+        if(value.isEmpty){
+          return "Este campo no puede estar vacio";
+        }return null;
+      } ,
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5.0)
+            
         ),
         hintText: "Desde",
         labelText: "Desde",
         prefixIcon: Icon(
           Icons.calendar_today,
           color: Colors.grey,
+          
         ),
 
       ),
+      
       //aqui lo que hacemos es que cuando se haga click en el boton llame al metodo _selectDate para que
       //el datepicker abra el selector de fechas
       onTap: (){
@@ -179,9 +189,14 @@ Widget _form(){
   _hastaFecha() {
 
     //final format = DateFormat("yyyy-MM-dd");
-    return TextField(
+    return TextFormField(
       enableInteractiveSelection: false,
       controller: _inputFieldhastaDateController,
+       validator:(value){
+        if(value.isEmpty){
+          return "Este campo no puede estar vacio";
+        }return null;
+      } ,
       decoration: InputDecoration(
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5.0)
@@ -262,8 +277,10 @@ Widget _form(){
       textColor: Colors.white,
       onPressed: (){
 
-        
-         registrar();
+        if(_formKey.currentState.validate()){
+            registrar();
+        }
+         
 
           
 
